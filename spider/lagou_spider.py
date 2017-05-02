@@ -108,6 +108,9 @@ def get_max_pageNo(positionName):
 if __name__ == '__main__':
     # jobname = '人工智能'
     craw_job_list = ["数据挖掘", "ios", "后端", "架构师", "前端", "Android", "大数据", "人工智能", "java", "php", "python"]
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/"
+    if not os.path.exists(path) or not os.path.isdir(path):
+        os.makedirs(path)
     for _ in craw_job_list:
         joblist = crawl_jobs(_)
         col = [
@@ -121,6 +124,5 @@ if __name__ == '__main__':
                 u'公司全称']
         # jl = [json.dumps(_) for _ in joblist]
         df = pd.DataFrame(joblist, columns=col)
-        path = "/data/"
         df.to_csv(path + _ + ".csv")
         # write_excel(joblist, jobname)
