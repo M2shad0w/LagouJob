@@ -47,9 +47,9 @@ def crawl_jobs(positionName):
                 #           each_item['createTime'], each_item['salary'],
                 #           each_item['companyId'], each_item['companyName'], each_item['companyFullName'])
                 # joblist.append(job)
-                JOB_DATA.append([each_item['positionId'], each_item['positionName'], each_item['city'],
-                          each_item['createTime'], each_item['salary'],
-                          each_item['companyId'], each_item['companyName'], each_item['companyFullName']])
+                JOB_DATA.append([each_item.get('positionId', 0), each_item.get('positionName', None), each_item.get('city', None),
+                          each_item.get('createTime', None), each_item.get('salary', None),
+                          each_item.get('companyId', 0), each_item.get('companyName', None), each_item.get('companyFullName', None)])
                 crawl_job_detail(each_item['positionId'], positionName)
             print('crawling page %d done...' % i)
             time.sleep(TIME_SLEEP)
@@ -107,7 +107,7 @@ def get_max_pageNo(positionName):
 
 if __name__ == '__main__':
     # jobname = '人工智能'
-    craw_job_list = ["数据挖掘", "ios", "后端", "架构师", "前端", "Android", "大数据", "人工智能", "java", "php", "python"]
+    craw_job_list = ["大数据", "信息安全", "机器学习", "后端", "架构师", "前端", "Android", "大数据", "人工智能", "java", "php", "python"]
     path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/"
     if not os.path.exists(path) or not os.path.isdir(path):
         os.makedirs(path)
