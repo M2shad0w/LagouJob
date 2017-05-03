@@ -6,3 +6,4 @@ util/__pycache__/
 spider/
 logs
 *.pyc
+data.zip

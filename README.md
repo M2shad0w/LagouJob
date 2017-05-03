@@ -31,6 +31,10 @@
 > ![Image4](https://pic2.zhimg.com/0ce1858e3f261f0a90e50e79bd057e8d_b.png)
 > ![Image5](https://pic3.zhimg.com/3854e7ca5a8c53e5bb98a2ae3add4a8e_b.png)
 
+### download data
+
+[all job data](https://github.com/M2shad0w/LagouJob/files/972720/data.zip)
+
 ### More
 For more information, please visit my answer at [Zhihu](https://www.zhihu.com/question/36132174/answer/94392659).
 
