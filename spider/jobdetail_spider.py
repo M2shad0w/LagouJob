@@ -1,16 +1,10 @@
-import logging
-import os
-
+from util import log as logging
 import requests
 from bs4 import BeautifulSoup
-import time
-from config.config import TIME_SLEEP
+from config.config import *
 
-from util.excel_helper import mkdirs_if_not_exists
 
-JOB_DETAIL_DIR = './data'
-
-logging.basicConfig(format="%(asctime)s-%(name)s-%(levelname)s-%(message)s\t", level=logging.DEBUG)
+JOB_DETAIL_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/"
 
 
 def crawl_job_detail(positionId, positionName):
@@ -24,24 +18,31 @@ def crawl_job_detail(positionId, positionName):
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4'
     }
+    status = False
+    try:
+        response = requests.get(request_url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html5lib')
+            text = soup.find_all('div', class_='content')[0].get_text()
 
-    response = requests.get(request_url, headers=headers, timeout=10)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html5lib')
-        text = soup.find_all('div', class_='content')[0].get_text()
-
-        write_job_details(positionId, text, positionName)
-        time.sleep(TIME_SLEEP)
-    elif response.status_code == 403:
-        logging.error('request is forbidden by the server...')
-    else:
-        logging.error(response.status_code)
+            write_job_details(positionId, text, positionName)
+            # time.sleep(TIME_SLEEP)
+            status = True
+        elif response.status_code == 403:
+            logging.error('request is forbidden by the server...')
+        else:
+            logging.error(response.status_code)
+    except Exception, e:
+        logging.error(e)
+    finally:
+        return status
 
 
 def write_job_details(positionId, text, parent_dir_name):
     """write the job details text into text file"""
     details_dir = JOB_DETAIL_DIR + parent_dir_name + os.path.sep
-    mkdirs_if_not_exists(details_dir)
+    if not os.path.exists(details_dir) or not os.path.isdir(details_dir):
+        os.makedirs(details_dir)
     try:
         f = open(details_dir + str(positionId) + '.txt', mode='w', encoding='UTF-8')
     except:

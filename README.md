@@ -10,16 +10,10 @@
 
 
 ### Install Prerequisition
-1. Python Version >= 3.4
+1. Python Version >= 3.4 or Python Version 2.7
 2. Third Party Library: 
 
-  > pip3 install requests
-  > 
-  > pip3 install beautifulsoup4
-  >
-  > pip3 install jieba
-  >
-  > pip3 install openpyxl
+   pip install -r requirements.txt
 
 ### Basic Usage
 1. clone this project from [github](https://github.com/EclipseXuLu/LagouJob.git)

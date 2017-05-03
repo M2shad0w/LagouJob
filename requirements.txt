@@ -13,3 +13,6 @@ pandas == 0.18.1
 # spider/jobdetail_spider.py: 4
 # spider/lagou_spider.py: 7
 requests == 2.13.0
+
+jieba >= 0.36
+
